@@ -1,0 +1,41 @@
+{
+  "code": "gasifier",
+  "class": "gasnetwork:BlockGasifier",
+  "entityClass": "gasnetwork:BEGasifier",
+  "creativeinventory": { "general": [ "*-south" ] },
+  "variantgroups": [
+    {"code": "type", "states": [ "gasifier" ]},
+    {"code": "side", "loadFromProperties": "abstract/horizontalorientation"}
+  ],
+  "behaviors": [
+    {"name": "HorizontalOrientable", "properties": { "dropBlockFace": "south" }},
+    {"name": "Multiblock", "properties": { "sizex": 1, "sizey": 2, "sizez": 1, "cposition": { "x": 0, "y": 0, "z": 0 } } },
+    {"name": "JonasGasifier"}
+  ],
+  "entityBehaviors": [
+    { "name": "JonasGasifier" }
+  ],
+  "shapebytype": {
+    "*-north": { "base": "block/gasifier", "rotateY": 90 },
+    "*-east": { "base": "block/gasifier", "rotateY": 0 },
+    "*-south": { "base": "block/gasifier", "rotateY": 270 },
+    "*-west": { "base": "block/gasifier", "rotateY": 180 }
+  },
+  "textures": {
+    "coal": { "base": "game:block/coal/charcoal" },
+    "ember": { "base": "game:block/coal/ember" }
+  },
+  "blockmaterial": "Metal",
+  "drawtype": "json",
+  "faceCullMode": "NeverCull",
+  "replaceable": 160,
+  "resistance": 4,
+  "lightAbsorption": 0,
+  "sidesolid": { "all": false },
+  "sideopaque": { "all": false },
+  "sounds": {
+    "place": "game:block/heavymetal-hit",
+    "break": "game:block/heavymetal-hit",
+    "hit": "game:block/heavymetal-hit"
+  }
+}

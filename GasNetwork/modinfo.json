@@ -1,0 +1,14 @@
+{
+    "type": "code",
+    "modid": "gasnetwork",
+    "name": "GasNetwork",
+    "authors": [
+        "NotPossible"
+    ],
+    "description": "Makes the gasifier network buildable",
+    "version": "1.0.0",
+    "dependencies": {
+        "attributerenderinglibrary": "2.3.0",
+        "game": "1.21.4"
+    }
+}

@@ -1,0 +1,119 @@
+{
+  "code": "thinpipe",
+  "class": "gasnetwork:BlockPipe",
+  "entityClass": "gasnetwork:BEPipe",
+  "shape": { "base": "gasnetwork:block/pipes/thinpipe" },
+  "entityBehaviors": [
+    { "name": "AttributeRenderingLibrary.ShapeTexturesFromAttributes" }
+  ],
+  "behaviors": [
+    {
+      "name": "AttributeRenderingLibrary.BlockShapeTexturesFromAttributes",
+      "properties": {
+        "shape": {
+          // 0 way
+          "mask-000000": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core"] },
+
+          // 1 way
+          "mask-000001": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","D"] },
+          "mask-000010": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","U"] },
+          "mask-000100": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","W"] },
+          "mask-001000": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","S"] },
+          "mask-010000": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","E"] },
+          "mask-100000": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N"] },
+
+          // 2 way
+          "mask-000011": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","U","D"] },
+          "mask-000101": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","W","D"] },
+          "mask-000110": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","W","U"] },
+          "mask-001001": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","S","D"] },
+          "mask-001010": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","S","U"] },
+          "mask-001100": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","S","W"] },
+          "mask-010001": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","E","D"] },
+          "mask-010010": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","E","U"] },
+          "mask-010100": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","E","W"] },
+          "mask-011000": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","E","S"] },
+          "mask-100001": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","D"] },
+          "mask-100010": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","U"] },
+          "mask-100100": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","W"] },
+          "mask-101000": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","S"] },
+          "mask-110000": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","E"] },
+
+          // 3 way
+          "mask-000111": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","W","U","D"] },
+          "mask-001011": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","S","U","D"] },
+          "mask-001101": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","S","W","D"] },
+          "mask-001110": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","S","W","U"] },
+          "mask-010011": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","E","U","D"] },
+          "mask-010101": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","E","W","D"] },
+          "mask-010110": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","E","W","U"] },
+          "mask-011001": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","E","S","D"] },
+          "mask-011010": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","E","S","U"] },
+          "mask-011100": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","E","S","W"] },
+          "mask-100011": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","U","D"] },
+          "mask-100101": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","W","D"] },
+          "mask-100110": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","W","U"] },
+          "mask-101001": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","S","D"] },
+          "mask-101010": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","S","U"] },
+          "mask-101100": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","S","W"] },
+          "mask-110001": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","E","D"] },
+          "mask-110010": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","E","U"] },
+          "mask-110100": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","E","W"] },
+          "mask-111000": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","E","S"] },
+
+          // 4 way
+          "mask-001111": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","S","W","U","D"] },
+          "mask-010111": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","E","W","U","D"] },
+          "mask-011011": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","E","S","U","D"] },
+          "mask-011101": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","E","S","W","D"] },
+          "mask-011110": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","E","S","W","U"] },
+          "mask-100111": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","W","U","D"] },
+          "mask-101011": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","S","U","D"] },
+          "mask-101101": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","S","W","D"] },
+          "mask-101110": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","S","W","U"] },
+          "mask-110011": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","E","U","D"] },
+          "mask-110101": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","E","W","D"] },
+          "mask-110110": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","E","W","U"] },
+          "mask-111001": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","E","S","D"] },
+          "mask-111010": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","E","S","U"] },
+          "mask-111100": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","E","S","W"] },
+
+          // 5 way
+          "mask-011111": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","E","S","W","U","D"] },
+          "mask-101111": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","S","W","U","D"] },
+          "mask-110111": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","E","W","U","D"] },
+          "mask-111011": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","E","S","U","D"] },
+          "mask-111101": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","E","S","W","D"] },
+          "mask-111110": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","E","S","W","U"] },
+
+          // 6 way
+          "mask-111111": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core","N","E","S","W","U","D"] },
+
+          // fallback
+          "*": { "base": "gasnetwork:block/pipes/thinpipe", "selectiveElements": ["Core"] }
+        },
+
+        "textures": {
+          "*": {
+            "brass": { "base": "game:block/metal/ingot/brass" }
+          }
+        }
+      }
+    }
+  ],
+  "blockmaterial": "Metal",
+  "drawtype": "json",
+  "faceCullMode": "NeverCull",
+  "sideopaque": { "all": false },
+  "sidesolid":  { "all": false },
+  "sideao":     { "all": true },
+  "emitsideao": { "all": false },
+  "lightAbsorption": 1,
+  "creativeinventory": { "general": ["*"] },
+  "replaceable": 90,
+  "sounds": {
+    "place": "game:block/heavymetal-hit",
+    "break": "game:block/heavymetal-hit",
+    "hit":   "game:block/heavymetal-hit"
+  }
+}

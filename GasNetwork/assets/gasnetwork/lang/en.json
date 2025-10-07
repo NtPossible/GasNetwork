@@ -1,0 +1,7 @@
+{
+  "block-gasifier-*": "Gasifier",
+  "block-gasifiertank-*": "Gasifier Tank",
+  "block-pipe": "Pipe",
+  "block-pipelamp": "Pipe Lamp",
+  "block-thinpipe": "Thin Pipe"
+}

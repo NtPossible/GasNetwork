@@ -1,0 +1,39 @@
+{
+	"code": "gasifiertank",
+	"class": "gasnetwork:BlockGasifierTank",
+  "entityClass": "gasnetwork:BEGasifierTank",
+	"creativeinventory": { "general": ["*-south"] },
+	"variantgroups": [
+		{ "code": "type", "states": ["gasifiertank"] },
+		{ "code": "side", "loadFromProperties": "abstract/horizontalorientation" }
+	],
+	"attributes": {
+		"handbook": {
+			"exclude": true
+		}
+	},
+	"behaviors": [
+		{ "name": "HorizontalOrientable", "properties": {  "dropBlockFace": "south" }}
+	],
+	"shapebytype": {
+		"*-north": { "base": "block/gasifiertank", "rotateY": 90 },
+		"*-east": { "base": "block/gasifiertank", "rotateY": 0 },
+		"*-south": { "base": "block/gasifiertank", "rotateY": 270 },
+		"*-west": { "base": "block/gasifiertank", "rotateY": 180 }
+	},
+	"blockmaterial": "Metal",
+	"drawtype": "json",
+	"faceCullMode": "NeverCull",
+	"replaceable": 160,
+	"resistance": 4,
+	"lightAbsorption": 0,
+	"sidesolid": { "all": false },
+	"sideopaque": { "all": false },
+	"sounds": {
+		"place": "game:block/heavymetal-hit",
+		"break": "game:block/heavymetal-hit",
+		"hit": "game:block/heavymetal-hit"
+	},
+	"selectionBox": { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 1.35, "z2": 1 },
+  "collisionBox": { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 1.35, "z2": 1 }
+}
