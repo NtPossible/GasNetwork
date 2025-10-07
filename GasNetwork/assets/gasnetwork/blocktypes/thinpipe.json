@@ -3,6 +3,7 @@
   "class": "gasnetwork:BlockPipe",
   "entityClass": "gasnetwork:BEPipe",
   "shape": { "base": "gasnetwork:block/pipes/thinpipe" },
+  "attributes": { "pipe": { "channels": "Thin" } },
   "entityBehaviors": [
     { "name": "AttributeRenderingLibrary.ShapeTexturesFromAttributes" }
   ],
@@ -105,8 +106,8 @@
   "drawtype": "json",
   "faceCullMode": "NeverCull",
   "sideopaque": { "all": false },
-  "sidesolid":  { "all": false },
-  "sideao":     { "all": true },
+  "sidesolid": { "all": false },
+  "sideao": { "all": true },
   "emitsideao": { "all": false },
   "lightAbsorption": 1,
   "creativeinventory": { "general": ["*"] },
@@ -114,6 +115,6 @@
   "sounds": {
     "place": "game:block/heavymetal-hit",
     "break": "game:block/heavymetal-hit",
-    "hit":   "game:block/heavymetal-hit"
+    "hit": "game:block/heavymetal-hit"
   }
 }

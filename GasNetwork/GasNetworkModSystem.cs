@@ -13,13 +13,13 @@ namespace GasNetwork
         public override void Start(ICoreAPI api)
         {
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockPipe", typeof(BlockPipe));
-            api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BEPipe", typeof(BEPipe));
+            api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BEPipe", typeof(BlockEntityPipe));
 
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockGasifier", typeof(BlockGasifier));
-            api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BEGasifier", typeof(BEGasifier));
+            api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BEGasifier", typeof(BlockEntityGasifier));
 
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockGasifierTank", typeof(BlockGasifierTank));
-            api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BEGasifierTank", typeof(BEGasifierTank));
+            api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BEGasifierTank", typeof(BlockEntityGasifierTank));
 
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockJonasLamp", typeof(BlockPipeLamp));
         }

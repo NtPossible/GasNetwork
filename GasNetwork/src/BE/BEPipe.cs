@@ -6,9 +6,20 @@ using Vintagestory.API.MathTools;
 
 namespace GasNetwork.src.BE
 {
-    public class BEPipe : BlockEntity
+    public class BlockEntityPipe : BlockEntity, IPipeConnectable
     {
-        // connection flags
+        private PipeChannel configuredChannels = PipeChannel.Regular;
+
+        public PipeChannel Channels
+        {
+            get { return configuredChannels; }
+        }
+
+        public bool CanAcceptPipeAt(BlockFacing face)
+        {
+            return true;
+        }
+
         private string northConnected = "0";
         private string eastConnected = "0";
         private string southConnected = "0";
@@ -22,6 +33,12 @@ namespace GasNetwork.src.BE
         {
             base.Initialize(api);
 
+            if (Block != null && Block.Attributes != null)
+            {
+                string channels = Block.Attributes["pipe"]?["channels"].AsString("Regular");
+                configuredChannels = channels == "Thin" ? PipeChannel.Thin : PipeChannel.Regular;
+            }
+
             if (Api.Side == EnumAppSide.Server)
             {
                 Api.World.RegisterCallback(_ =>
@@ -30,7 +47,6 @@ namespace GasNetwork.src.BE
                     {
                         return;
                     }
-
                     RecalculateConnections(true);
                 }, 200);
             }
@@ -43,12 +59,12 @@ namespace GasNetwork.src.BE
                 return;
             }
 
-            string north = PipeUtils.IsConnectableAt(Api.World, Pos.NorthCopy(), BlockFacing.SOUTH) ? "1" : "0";
-            string east = PipeUtils.IsConnectableAt(Api.World, Pos.EastCopy(), BlockFacing.WEST) ? "1" : "0";
-            string south = PipeUtils.IsConnectableAt(Api.World, Pos.SouthCopy(), BlockFacing.NORTH) ? "1" : "0";
-            string west = PipeUtils.IsConnectableAt(Api.World, Pos.WestCopy(), BlockFacing.EAST) ? "1" : "0";
-            string up = PipeUtils.IsConnectableAt(Api.World, Pos.UpCopy(), BlockFacing.DOWN) ? "1" : "0";
-            string down = PipeUtils.IsConnectableAt(Api.World, Pos.DownCopy(), BlockFacing.UP) ? "1" : "0";
+            string north = PipeUtils.IsConnectableAt(Api.World, Pos.NorthCopy(), BlockFacing.SOUTH, configuredChannels) ? "1" : "0";
+            string east = PipeUtils.IsConnectableAt(Api.World, Pos.EastCopy(), BlockFacing.WEST, configuredChannels) ? "1" : "0";
+            string south = PipeUtils.IsConnectableAt(Api.World, Pos.SouthCopy(), BlockFacing.NORTH, configuredChannels) ? "1" : "0";
+            string west = PipeUtils.IsConnectableAt(Api.World, Pos.WestCopy(), BlockFacing.EAST, configuredChannels) ? "1" : "0";
+            string up = PipeUtils.IsConnectableAt(Api.World, Pos.UpCopy(), BlockFacing.DOWN, configuredChannels) ? "1" : "0";
+            string down = PipeUtils.IsConnectableAt(Api.World, Pos.DownCopy(), BlockFacing.UP, configuredChannels) ? "1" : "0";
 
             string newConnectionMask = north + east + south + west + up + down;
 
@@ -80,8 +96,7 @@ namespace GasNetwork.src.BE
             connectionTypes.SetString("west", westConnected);
             connectionTypes.SetString("up", upConnected);
             connectionTypes.SetString("down", downConnected);
-
-            connectionTypes.SetString("mask", BuildConnectionMask());
+            connectionTypes.SetString("mask", northConnected + eastConnected + southConnected + westConnected + upConnected + downConnected);
         }
 
         public override void FromTreeAttributes(ITreeAttribute tree, IWorldAccessor worldAccessForResolve)
@@ -100,14 +115,8 @@ namespace GasNetwork.src.BE
             {
                 BlockEntityBehaviorShapeTexturesFromAttributes renderer = GetBehavior<BlockEntityBehaviorShapeTexturesFromAttributes>();
                 renderer?.OnBlockPlaced(null);
-
                 Api.World.BlockAccessor.MarkBlockDirty(Pos);
             }
-        }
-
-        private string BuildConnectionMask()
-        {
-            return northConnected + eastConnected + southConnected + westConnected + upConnected + downConnected;
         }
     }
 }
