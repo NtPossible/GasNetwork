@@ -9,7 +9,7 @@
 		"brass": [16,16]
 	},
 	"textures": {
-		"brass": "game:block/metal/ingot/brass"
+		"brass": "game:block/metal/plate/brass"
 	},
 	"elements": [
 		{

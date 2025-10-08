@@ -9,11 +9,9 @@
   ],
   "behaviors": [
     { "name": "HorizontalOrientable", "properties": { "dropBlockFace": "south" }},
-    { "name": "Multiblock", "properties": { "sizex": 1, "sizey": 2, "sizez": 1, "cposition": { "x": 0, "y": 0, "z": 0 } } },
-    { "name": "JonasGasifier" }
+    { "name": "Multiblock", "properties": { "sizex": 1, "sizey": 2, "sizez": 1, "cposition": { "x": 0, "y": 0, "z": 0 } } }
   ],
   "entityBehaviors": [
-    { "name": "JonasGasifier" }
   ],
   "shapebytype": {
     "*-north": { "base": "block/gasifier", "rotateY": 90 },
