@@ -16,10 +16,10 @@
 		{ "name": "HorizontalOrientable", "properties": {  "dropBlockFace": "south" }}
 	],
 	"shapebytype": {
-		"*-north": { "base": "block/gasifiertank", "rotateY": 90 },
-		"*-east": { "base": "block/gasifiertank", "rotateY": 0 },
-		"*-south": { "base": "block/gasifiertank", "rotateY": 270 },
-		"*-west": { "base": "block/gasifiertank", "rotateY": 180 }
+		"*-north": { "base": "block/machine/gasifiertank", "rotateY": 90 },
+		"*-east": { "base": "block/machine/gasifiertank", "rotateY": 0 },
+		"*-south": { "base": "block/machine/gasifiertank", "rotateY": 270 },
+		"*-west": { "base": "block/machine/gasifiertank", "rotateY": 180 }
 	},
 	"blockmaterial": "Metal",
 	"drawtype": "json",

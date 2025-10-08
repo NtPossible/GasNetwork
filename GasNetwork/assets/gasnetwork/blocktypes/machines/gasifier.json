@@ -14,10 +14,10 @@
   "entityBehaviors": [
   ],
   "shapebytype": {
-    "*-north": { "base": "block/gasifier", "rotateY": 90 },
-    "*-east": { "base": "block/gasifier", "rotateY": 0 },
-    "*-south": { "base": "block/gasifier", "rotateY": 270 },
-    "*-west": { "base": "block/gasifier", "rotateY": 180 }
+    "*-north": { "base": "block/machine/gasifier", "rotateY": 90 },
+    "*-east": { "base": "block/machine/gasifier", "rotateY": 0 },
+    "*-south": { "base": "block/machine/gasifier", "rotateY": 270 },
+    "*-west": { "base": "block/machine/gasifier", "rotateY": 180 }
   },
   "textures": {
     "coal": { "base": "game:block/coal/charcoal" },

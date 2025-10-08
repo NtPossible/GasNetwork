@@ -21,7 +21,9 @@ namespace GasNetwork
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockGasifierTank", typeof(BlockGasifierTank));
             api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BEGasifierTank", typeof(BlockEntityGasifierTank));
 
-            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockJonasLamp", typeof(BlockPipeLamp));
+            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockPipeLamp", typeof(BlockPipeLamp));
+
+            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockGasLamp", typeof(BlockGasLamp));
         }
     }
 }

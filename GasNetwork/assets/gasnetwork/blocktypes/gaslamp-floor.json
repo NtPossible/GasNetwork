@@ -1,0 +1,30 @@
+{
+  "code": "gaslampfloor",
+  "class": "gasnetwork:BlockGasLamp",
+  "creativeinventory": { "general": [ "*" ] },
+  "attributes": {
+    "pipe": { "channels": "Thin" }
+  },
+  "entityBehaviors": [
+    { "name": "AttributeRenderingLibrary.ShapeTexturesFromAttributes" }
+  ],
+  "behaviors": [
+    {
+      "name": "AttributeRenderingLibrary.BlockShapeTexturesFromAttributes",
+      "properties": {
+        "shape": {
+          "state-off": { "base": "gasnetwork:block/lamp/gas-floor-off" },
+          "state-on": { "base": "gasnetwork:block/lamp/gas-floor-on" }
+        }
+      }
+    }
+  ],
+  "shape": { "base": "gasnetwork:block/lamp/gas-floor-off" },
+  "faceCullMode": "NeverCull",
+  "replaceable": 90,
+  "sidesolid": { "all": false },
+  "sideopaque": { "all": false },
+  "sideao": { "all": false },
+  "emitsideao": { "all": false },
+  "lightAbsorption": 1
+}

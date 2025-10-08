@@ -1,0 +1,31 @@
+{
+  "code": "gaslampceiling",
+  "class": "gasnetwork:BlockGasLamp",
+  "creativeinventory": { "general": [ "*" ] },
+  "attributes": {
+    "pipe": { "channels": "Thin" }
+  },
+  "entityBehaviors": [
+    { "name": "AttributeRenderingLibrary.ShapeTexturesFromAttributes" }
+  ],
+  "behaviors": [
+    {
+      "name": "AttributeRenderingLibrary.BlockShapeTexturesFromAttributes",
+      "properties": {
+        "shape": {
+          "state-off": { "base": "gasnetwork:block/lamp/gas-ceiling-off" },
+          "state-on": { "base": "gasnetwork:block/lamp/gas-ceiling-on" }
+        }
+      }
+    }
+  ],
+  "lightHsv": [ 7, 3, 22 ],
+  "shape": { "base": "gasnetwork:block/lamp/gas-ceiling-on" },
+  "faceCullMode": "NeverCull",
+  "replaceable": 90,
+  "sidesolid": { "all": false },
+  "sideopaque": { "all": false },
+  "sideao": { "all": false },
+  "emitsideao": { "all": false },
+  "lightAbsorption": 1
+}

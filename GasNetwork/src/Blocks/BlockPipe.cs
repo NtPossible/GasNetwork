@@ -1,5 +1,6 @@
 ﻿using GasNetwork.src.BE;
 using GasNetwork.src.Utils;
+using System.Collections.Generic;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
@@ -93,5 +94,79 @@ namespace GasNetwork.src.Blocks
             connectionTypes.SetString("down", down);
             connectionTypes.SetString("mask", connectionMask);
         }
+
+        public override Cuboidf[] GetCollisionBoxes(IBlockAccessor blockAccessor, BlockPos pos)
+        {
+            GetConnections(pos, out bool north, out bool east, out bool south, out bool west, out bool up, out bool down);
+
+            float thickness = (configuredChannels == PipeChannel.Thin) ? 0.13f : 0.330f;
+
+            List<Cuboidf> boxes = GeneratePipeBoxes(north, east, south, west, up, down, thickness);
+            return boxes.ToArray();
+        }
+
+        public override Cuboidf[] GetSelectionBoxes(IBlockAccessor blockAccessor, BlockPos pos)
+        {
+            GetConnections(pos, out bool north, out bool east, out bool south, out bool west, out bool up, out bool down);
+
+            float thickness = (configuredChannels == PipeChannel.Thin) ? 0.13f : 0.330f;
+
+            List<Cuboidf> boxes = GeneratePipeBoxes(north, east, south, west, up, down, thickness);
+            return boxes.ToArray();
+        }
+
+        // Figure out which faces this pipe connects to.
+        private void GetConnections(BlockPos pos, out bool north, out bool east, out bool south, out bool west, out bool up, out bool down)
+        {
+            north = PipeUtils.IsConnectableAt(api.World, pos.NorthCopy(), BlockFacing.SOUTH, configuredChannels);
+            east = PipeUtils.IsConnectableAt(api.World, pos.EastCopy(), BlockFacing.WEST, configuredChannels);
+            south = PipeUtils.IsConnectableAt(api.World, pos.SouthCopy(), BlockFacing.NORTH, configuredChannels);
+            west = PipeUtils.IsConnectableAt(api.World, pos.WestCopy(), BlockFacing.EAST, configuredChannels);
+            up = PipeUtils.IsConnectableAt(api.World, pos.UpCopy(), BlockFacing.DOWN, configuredChannels);
+            down = PipeUtils.IsConnectableAt(api.World, pos.DownCopy(), BlockFacing.UP, configuredChannels);
+        }
+
+        // Builds a core box plus arm boxes in each connected direction.
+        private static List<Cuboidf> GeneratePipeBoxes(bool north, bool east, bool south, bool west, bool up, bool down, float thickness)
+        {
+            // Half the total pipe thickness for symmetrical placement
+            float halfThickness = thickness * 0.5f;
+
+            // Core bounds are centered around the middle of the block
+            float minBound = 0.5f - halfThickness;
+            float maxBound = 0.5f + halfThickness;
+
+            List<Cuboidf> boxes = new();
+
+            // Central segment of the pipe
+            boxes.Add(new Cuboidf(minBound, minBound, minBound, maxBound, maxBound, maxBound));
+
+            // Arms extending toward connected directions
+            if (east)
+            {
+                boxes.Add(new Cuboidf(maxBound, minBound, minBound, 1f, maxBound, maxBound));
+            }
+            if (west)
+            {
+                boxes.Add(new Cuboidf(0f, minBound, minBound, minBound, maxBound, maxBound));
+            }
+            if (north) { 
+                boxes.Add(new Cuboidf(minBound, minBound, 0f, maxBound, maxBound, minBound));
+            }
+            if (south)
+            {
+                boxes.Add(new Cuboidf(minBound, minBound, maxBound, maxBound, maxBound, 1f));
+            }
+            if (up)
+            {
+                boxes.Add(new Cuboidf(minBound, maxBound, minBound, maxBound, 1f, maxBound));
+            }
+            if (down)
+            {
+                boxes.Add(new Cuboidf(minBound, 0f, minBound, maxBound, minBound, maxBound));
+            }
+            return boxes;
+        }
+
     }
 }

@@ -8,9 +8,9 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"vintage": "block/glass/vintage",
-		"brass": "block/metal/ingot/brass",
-		"iron": "block/metal/ingot/iron"
+		"vintage": "game:block/glass/vintage",
+		"brass": "game:block/metal/ingot/brass",
+		"iron": "game:block/metal/ingot/iron"
 	},
 	"elements": [
 		{

@@ -8,12 +8,12 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"steel": "block/metal/ingot/steel",
-		"vintage": "block/glass/vintage",
-		"flint": "block/stone/flint",
-		"silver": "block/metal/ingot/silver",
-		"brass": "block/metal/ingot/brass",
-		"iron": "block/metal/tarnished/iron"
+		"steel": "game:block/metal/ingot/steel",
+		"vintage": "game:block/glass/vintage",
+		"flint": "game:block/stone/flint",
+		"silver": "game:block/metal/ingot/silver",
+		"brass": "game:block/metal/ingot/brass",
+		"iron": "game:block/metal/ingot/iron"
 	},
 	"elements": [
 		{
@@ -133,6 +133,20 @@
 										"west": { "texture": "#iron", "uv": [ 13.5, 4.5, 14.5, 5.5 ] },
 										"up": { "texture": "#iron", "uv": [ 14.0, 14.0, 14.5, 15.0 ] },
 										"down": { "texture": "#iron", "uv": [ 12.0, 2.0, 12.5, 3.0 ] }
+									}
+								},
+								{
+									"name": "fire",
+									"from": [ 0.0, 4.0, 0.0 ], 
+									"to": [ 1.0, 5.0, 1.0 ], 
+									"rotationOrigin": [ 0.0, 4.0, 0.0 ],
+									"faces": {
+										"north": { "texture": "#brass", "uv": [ 0.0, 0.0, 1.0, 1.0 ], "glow": 255 },
+										"east": { "texture": "#brass", "uv": [ 0.0, 0.0, 1.0, 1.0 ], "glow": 255, "windMode": [-1,-1,-1,-1] },
+										"south": { "texture": "#brass", "uv": [ 0.0, 0.0, 1.0, 1.0 ], "glow": 255, "windMode": [-1,-1,-1,-1] },
+										"west": { "texture": "#brass", "uv": [ 0.0, 0.0, 1.0, 1.0 ], "glow": 255, "windMode": [-1,-1,-1,-1] },
+										"up": { "texture": "#brass", "uv": [ 0.0, 0.0, 1.0, 1.0 ], "glow": 255, "windMode": [-1,-1,-1,-1] },
+										"down": { "texture": "#brass", "uv": [ 0.0, 0.0, 1.0, 1.0 ], "glow": 255, "windMode": [-1,-1,-1,-1] }
 									}
 								}
 							],
