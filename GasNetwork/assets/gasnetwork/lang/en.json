@@ -4,7 +4,7 @@
   "block-pipe": "Pipe",
   "block-pipelamp": "Pipe Lamp",
   "block-thinpipe": "Thin Pipe",
-  "block-gaslampceiling": "Gas Lamp",
-  "block-gaslampfloor": "Gas Lamp",
-  "block-gaslampwall": "Gas Lamp"
+  "block-gaslampceiling-*": "Gas Lamp",
+  "block-gaslampfloor-*": "Gas Lamp",
+  "block-gaslampwall-*": "Gas Lamp"
 }
