@@ -24,10 +24,10 @@
     }
   ],
   "shapebytype": {
-    "*-north": { "base": "block/lamp/gas-wall", "rotateY": 0 },
-    "*-east": { "base": "block/lamp/gas-wall", "rotateY": 270 },
-    "*-south": { "base": "block/lamp/gas-wall", "rotateY": 180 },
-    "*-west": { "base": "block/lamp/gas-wall", "rotateY": 90 }
+    "*-north": { "base": "block/lamp/gas-floor", "rotateY": 0 },
+    "*-east": { "base": "block/lamp/gas-floor", "rotateY": 270 },
+    "*-south": { "base": "block/lamp/gas-floor", "rotateY": 180 },
+    "*-west": { "base": "block/lamp/gas-floor", "rotateY": 90 }
   },
   "lightHsv": [ 7, 3, 22 ],
   "faceCullMode": "NeverCull",
