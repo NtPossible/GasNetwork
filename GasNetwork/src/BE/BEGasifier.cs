@@ -30,7 +30,6 @@ namespace GasNetwork.src.BE
             inventory.Pos = Pos;
             inventory.ResolveBlocksOrItems();
 
-
             RegisterGameTickListener(OnTick, 2000, 12);
         }
 
@@ -39,10 +38,10 @@ namespace GasNetwork.src.BE
             base.OnBlockPlaced(byItemStack);
 
             // Copy state from the itemstack
-            ITreeAttribute itemTypes = byItemStack?.Attributes?.GetTreeAttribute("itemTypes");
+            ITreeAttribute itemTypes = byItemStack?.Attributes?.GetTreeAttribute("types");
             if (itemTypes != null && itemTypes.HasAttribute("state"))
             {
-                this.types.SetString("state", itemTypes.GetString("state"));
+                types.SetString("state", itemTypes.GetString("state"));
             }
 
             MarkDirty(true);
@@ -55,7 +54,6 @@ namespace GasNetwork.src.BE
             Api.World.PlaySoundAt(new AssetLocation("sounds/block/metaldoor"), Pos, 0, byPlayer);
             (byPlayer as IClientPlayer)?.TriggerFpAnimation(EnumHandInteract.HeldItemInteract);
         }
-
 
         public bool TryAddFuel(ItemSlot fromSlot, IPlayer byPlayer)
         {
@@ -78,6 +76,7 @@ namespace GasNetwork.src.BE
 
             Api.World.PlaySoundAt(new AssetLocation("sounds/block/charcoal"), Pos, 0, byPlayer);
             (byPlayer as IClientPlayer)?.TriggerFpAnimation(EnumHandInteract.HeldItemInteract);
+
             if (!Lit)
             {
                 SetState(fuel: "coal");
@@ -151,7 +150,7 @@ namespace GasNetwork.src.BE
             {
                 inventory.FromTreeAttributes(invTree);
             }
-            TreeAttribute treeAttr = tree.GetTreeAttribute("itemTypes") as TreeAttribute;
+            TreeAttribute treeAttr = tree.GetTreeAttribute("types") as TreeAttribute;
             types = treeAttr ?? new TreeAttribute();
 
             if (Api != null && Api.Side == EnumAppSide.Client)
@@ -172,7 +171,7 @@ namespace GasNetwork.src.BE
             inventory.ToTreeAttributes(invTree);
             tree["inventory"] = invTree;
 
-            tree["itemTypes"] = types;
+            tree["types"] = types;
         }
 
         public override void OnBlockBroken(IPlayer byPlayer = null)
