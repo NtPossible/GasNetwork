@@ -4,24 +4,41 @@
   "entityClass": "gasnetwork:BEGasifier",
   "creativeinventory": { "general": [ "*-south" ] },
   "variantgroups": [
-    { "code": "type", "states": [ "gasifier" ] },
     { "code": "side", "loadFromProperties": "abstract/horizontalorientation" }
   ],
-  "behaviors": [
-    { "name": "HorizontalOrientable", "properties": { "dropBlockFace": "south" }},
-    { "name": "Multiblock", "properties": { "sizex": 1, "sizey": 2, "sizez": 1, "cposition": { "x": 0, "y": 0, "z": 0 } } }
-  ],
   "entityBehaviors": [
+    { "name": "AttributeRenderingLibrary.ShapeTexturesFromAttributes" }
+  ],
+  "behaviors": [
+    { "name": "Multiblock", "properties": { "sizex": 1, "sizey": 2, "sizez": 1, "cposition": { "x": 0, "y": 0, "z": 0 } } },
+    { "name": "gasnetwork:BBGasifier" }, 
+    { "name": "AttributeRenderingLibrary.HorizontalOrientable" },
+    {
+      "name": "AttributeRenderingLibrary.BlockShapeTexturesFromAttributes",
+      "properties": {
+        "shape": {
+          // open states
+          "state-open-none": { "base": "gasnetwork:block/machine/gasifier", "selectiveElements": ["Mover/*","door-open/*"], "rotateYByType": { "*-north": 90, "*-east": 0, "*-south": 270, "*-west": 180 } },
+          "state-open-coal": { "base": "gasnetwork:block/machine/gasifier", "selectiveElements": ["Mover/*","door-open/*","coal"], "rotateYByType": { "*-north": 90, "*-east": 0, "*-south": 270, "*-west": 180 } },
+          "state-open-lit": { "base": "gasnetwork:block/machine/gasifier", "selectiveElements": ["Mover/*","door-open/*","coal-lit"], "rotateYByType": { "*-north": 90, "*-east": 0, "*-south": 270, "*-west": 180 } },
+
+          // closed states
+          "state-closed-none": { "base": "gasnetwork:block/machine/gasifier", "selectiveElements": ["Mover/*","door-closed/*"], "rotateYByType": { "*-north": 90, "*-east": 0, "*-south": 270, "*-west": 180 } },
+          "state-closed-coal": { "base": "gasnetwork:block/machine/gasifier", "selectiveElements": ["Mover/*","door-closed/*","coal"], "rotateYByType": { "*-north": 90, "*-east": 0, "*-south": 270, "*-west": 180 } },
+          "state-closed-lit": { "base": "gasnetwork:block/machine/gasifier", "selectiveElements": ["Mover/*","door-closed/*","coal-lit"], "rotateYByType": { "*-north": 90, "*-east": 0, "*-south": 270, "*-west": 180 } },
+
+          // fallback
+          "*": { "base": "gasnetwork:block/machine/gasifier", "selectiveElements": ["Mover/*","door-closed/*"], "rotateYByType": { "*-north": 90, "*-east": 0, "*-south": 270, "*-west": 180 }
+          }
+        }
+      }
+    }
   ],
   "shapebytype": {
-    "*-north": { "base": "block/machine/gasifier", "rotateY": 90 },
-    "*-east": { "base": "block/machine/gasifier", "rotateY": 0 },
-    "*-south": { "base": "block/machine/gasifier", "rotateY": 270 },
-    "*-west": { "base": "block/machine/gasifier", "rotateY": 180 }
-  },
-  "textures": {
-    "coal": { "base": "game:block/coal/charcoal" },
-    "ember": { "base": "game:block/coal/ember" }
+    "*-north": { "base": "gasnetwork:block/machine/gasifier", "rotateY": 90 },
+    "*-east": { "base": "gasnetwork:block/machine/gasifier", "rotateY": 0 },
+    "*-south": { "base": "gasnetwork:block/machine/gasifier", "rotateY": 270 },
+    "*-west": { "base": "gasnetwork:block/machine/gasifier", "rotateY": 180 }
   },
   "blockmaterial": "Metal",
   "drawtype": "json",

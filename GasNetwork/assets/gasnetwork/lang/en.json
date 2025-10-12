@@ -6,5 +6,7 @@
   "block-thinpipe": "Thin Pipe",
   "block-gaslampceiling-*": "Gas Lamp",
   "block-gaslampfloor-*": "Gas Lamp",
-  "block-gaslampwall-*": "Gas Lamp"
+  "block-gaslampwall-*": "Gas Lamp",
+
+  "blockhelp-gasifier-door": "Open/close door"
 }

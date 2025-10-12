@@ -1,4 +1,5 @@
-﻿using GasNetwork.src.BE;
+﻿using GasNetwork.src.BB;
+using GasNetwork.src.BE;
 using GasNetwork.src.Blocks;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -17,6 +18,7 @@ namespace GasNetwork
 
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockGasifier", typeof(BlockGasifier));
             api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BEGasifier", typeof(BlockEntityGasifier));
+            api.RegisterBlockBehaviorClass($"{Mod.Info.ModID}:BBGasifier", typeof(BlockBehaviorGasifier));
 
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockGasifierTank", typeof(BlockGasifierTank));
             api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BEGasifierTank", typeof(BlockEntityGasifierTank));
