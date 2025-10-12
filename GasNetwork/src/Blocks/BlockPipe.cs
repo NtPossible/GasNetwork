@@ -99,7 +99,7 @@ namespace GasNetwork.src.Blocks
         {
             GetConnections(pos, out bool north, out bool east, out bool south, out bool west, out bool up, out bool down);
 
-            float thickness = (configuredChannels == PipeChannel.Thin) ? 0.13f : 0.330f;
+            float thickness = (configuredChannels == PipeChannel.Thin) ? 0.13f : 0.315f;
 
             List<Cuboidf> boxes = GeneratePipeBoxes(north, east, south, west, up, down, thickness);
             return boxes.ToArray();
@@ -109,7 +109,7 @@ namespace GasNetwork.src.Blocks
         {
             GetConnections(pos, out bool north, out bool east, out bool south, out bool west, out bool up, out bool down);
 
-            float thickness = (configuredChannels == PipeChannel.Thin) ? 0.13f : 0.330f;
+            float thickness = (configuredChannels == PipeChannel.Thin) ? 0.13f : 0.315f;
 
             List<Cuboidf> boxes = GeneratePipeBoxes(north, east, south, west, up, down, thickness);
             return boxes.ToArray();
