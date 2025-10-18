@@ -1,4 +1,5 @@
 ﻿using AttributeRenderingLibrary;
+using GasNetwork.src.Interfaces;
 using GasNetwork.src.Utils;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;

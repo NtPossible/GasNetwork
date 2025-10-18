@@ -1,6 +1,6 @@
 ﻿using Vintagestory.API.MathTools;
 
-namespace GasNetwork.src
+namespace GasNetwork.src.Interfaces
 {
     public interface IPipeConnectable
     {

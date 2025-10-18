@@ -6,15 +6,15 @@
 	"textureWidth": 16,
 	"textureHeight": 16,
 	"textureSizes": {
-		"quartz": [16,16],
-		"iron": [16,16]
+		"iron": [ 16, 16 ],
+		"quartz": [ 16, 16 ]
 	},
 	"textures": {
 		"coal": "game:block/coal/charcoal",
 		"ember": "game:block/coal/ember",
 		"quartz": "game:block/glass/quartz",
 		"iron": "game:block/metal/sheet/iron1",
-		"rusty-iron": "game:block/metal/tarnished/rusty-iron"
+		"rusty-iron": "game:block/metal/sheet/iron1"
 	},
 	"elements": [
 		{

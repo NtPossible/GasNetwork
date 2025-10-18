@@ -1,4 +1,5 @@
-﻿using Vintagestory.API.Common;
+﻿using GasNetwork.src.Interfaces;
+using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 
 namespace GasNetwork.src.BE
