@@ -12,7 +12,7 @@ namespace GasNetwork.src.BE
     public class BlockEntityGasifier : BlockEntity, IPipeConnectable
     {
         public PipeChannel Channels => PipeChannel.Regular;
-        public bool CanAcceptPipeAt(BlockFacing face) => true;
+        public bool CanAcceptPipeAt(BlockFacing face) => false;
 
         readonly InventoryGeneric inventory = new(1, null, null);
         public bool HasFuel => !inventory[0].Empty;
@@ -105,16 +105,16 @@ namespace GasNetwork.src.BE
                 return;
             }
             double hoursPassed = Math.Min(2400, Api.World.Calendar.TotalHours - burnStartTotalHours);
-            while (hoursPassed >= 8)
+            while (hoursPassed >= 12)
             {
-                burnStartTotalHours += 8;
+                burnStartTotalHours += 12;
                 inventory[0].TakeOut(1);
                 if (inventory.Empty)
                 {
                     SetState(fuel: "none");
                     break;
                 }
-                hoursPassed -= 8;
+                hoursPassed -= 12;
             }
         }
 
