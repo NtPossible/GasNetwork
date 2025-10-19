@@ -98,27 +98,31 @@ namespace GasNetwork.src.Blocks
 
         public override Cuboidf[] GetCollisionBoxes(IBlockAccessor blockAccessor, BlockPos pos)
         {
-            GetConnections(pos, out bool north, out bool east, out bool south, out bool west, out bool up, out bool down);
+            GetConnectionsForBoxes(blockAccessor, pos, out bool north, out bool east, out bool south, out bool west, out bool up, out bool down);
 
             float thickness = (configuredChannels == PipeChannel.Thin) ? 0.13f : 0.315f;
-
             List<Cuboidf> boxes = GeneratePipeBoxes(north, east, south, west, up, down, thickness);
             return boxes.ToArray();
         }
 
         public override Cuboidf[] GetSelectionBoxes(IBlockAccessor blockAccessor, BlockPos pos)
         {
-            GetConnections(pos, out bool north, out bool east, out bool south, out bool west, out bool up, out bool down);
+            GetConnectionsForBoxes(blockAccessor, pos, out bool north, out bool east, out bool south, out bool west, out bool up, out bool down);
 
             float thickness = (configuredChannels == PipeChannel.Thin) ? 0.13f : 0.315f;
-
             List<Cuboidf> boxes = GeneratePipeBoxes(north, east, south, west, up, down, thickness);
             return boxes.ToArray();
         }
 
-        // Figure out which faces this pipe connects to.
-        private void GetConnections(BlockPos pos, out bool north, out bool east, out bool south, out bool west, out bool up, out bool down)
+        private void GetConnectionsForBoxes(IBlockAccessor blockAccessor, BlockPos pos, out bool north, out bool east, out bool south, out bool west, out bool up, out bool down)
         {
+            if (blockAccessor.GetBlockEntity(pos) is BlockEntityPipe bePipe)
+            {
+                bePipe.GetStoredConnections(out north, out east, out south, out west, out up, out down);
+                return;
+            }
+
+            // fallback
             north = PipeUtils.IsConnectableAt(api.World, pos.NorthCopy(), BlockFacing.SOUTH, configuredChannels);
             east = PipeUtils.IsConnectableAt(api.World, pos.EastCopy(), BlockFacing.WEST, configuredChannels);
             south = PipeUtils.IsConnectableAt(api.World, pos.SouthCopy(), BlockFacing.NORTH, configuredChannels);

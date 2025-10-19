@@ -119,5 +119,15 @@ namespace GasNetwork.src.BE
                 Api.World.BlockAccessor.MarkBlockDirty(Pos);
             }
         }
+
+        public void GetStoredConnections(out bool north, out bool east, out bool south, out bool west, out bool up, out bool down)
+        {
+            north = northConnected == "1";
+            east = eastConnected == "1";
+            south = southConnected == "1";
+            west = westConnected == "1";
+            up = upConnected == "1";
+            down = downConnected == "1";
+        }
     }
 }
