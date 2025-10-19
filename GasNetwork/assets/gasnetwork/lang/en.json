@@ -8,5 +8,8 @@
   "block-gaslampfloor-*": "Gas Lamp",
   "block-gaslampwall-*": "Gas Lamp",
 
+  "item-gaslinker": "Gas Linker",
+  "itemdesc-gaslinker": "Links existing blocks into the gas pipe network.\nShift + Right-click to unlink.",
+
   "blockhelp-gasifier-door": "Open/close door"
 }

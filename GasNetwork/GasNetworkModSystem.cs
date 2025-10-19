@@ -1,10 +1,8 @@
 ﻿using GasNetwork.src.BB;
 using GasNetwork.src.BE;
 using GasNetwork.src.Blocks;
-using Vintagestory.API.Client;
+using GasNetwork.src.Items;
 using Vintagestory.API.Common;
-using Vintagestory.API.Config;
-using Vintagestory.API.Server;
 
 namespace GasNetwork
 {
@@ -24,6 +22,8 @@ namespace GasNetwork
             api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BEGasifierTank", typeof(BlockEntityGasifierTank));
 
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockGasLamp", typeof(BlockGasLamp));
+
+            api.RegisterItemClass($"{Mod.Info.ModID}:ItemGasLinker", typeof(ItemGasLinker));
         }
     }
 }
