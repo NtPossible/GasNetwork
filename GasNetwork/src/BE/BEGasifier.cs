@@ -12,8 +12,10 @@ namespace GasNetwork.src.BE
     public class BlockEntityGasifier : BlockEntity, IPipeConnectable
     {
         public PipeChannel Channels => PipeChannel.Regular;
-        public bool CanAcceptPipeAt(BlockFacing face) => false;
-
+        public bool CanAcceptPipeAt(BlockFacing face)
+        {
+            return face != BlockFacing.EAST;
+        }
         readonly InventoryGeneric inventory = new(1, null, null);
         public bool HasFuel => !inventory[0].Empty;
         public bool IsDoorOpen => State.StartsWith("open");
