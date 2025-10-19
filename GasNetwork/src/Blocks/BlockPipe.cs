@@ -42,9 +42,9 @@ namespace GasNetwork.src.Blocks
         {
             base.OnBlockPlaced(world, blockPos, byItemStack);
 
-            if (world.BlockAccessor.GetBlockEntity(blockPos) is BlockEntityPipe be)
+            if (world.BlockAccessor.GetBlockEntity(blockPos) is BlockEntityPipe bePipe)
             {
-                be.RecalculateConnections(true);
+                bePipe.RecalculateConnections(true);
             }
         }
 
@@ -52,8 +52,8 @@ namespace GasNetwork.src.Blocks
         {
             base.OnNeighbourBlockChange(world, pos, neibpos);
 
-            BlockEntityPipe be = world.BlockAccessor.GetBlockEntity(pos) as BlockEntityPipe;
-            be?.RecalculateConnections(false);
+            BlockEntityPipe bePipe = world.BlockAccessor.GetBlockEntity(pos) as BlockEntityPipe;
+            bePipe?.RecalculateConnections(false);
         }
 
         public override void OnBlockRemoved(IWorldAccessor world, BlockPos pos)

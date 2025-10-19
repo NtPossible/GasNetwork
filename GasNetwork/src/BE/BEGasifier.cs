@@ -77,7 +77,7 @@ namespace GasNetwork.src.BE
                 return false;
             }
 
-            Api.World.PlaySoundAt(new AssetLocation("sounds/block/charcoal"), Pos, 0, byPlayer);
+            Api.World.PlaySoundAt(new AssetLocation("game:sounds/block/charcoal"), Pos, 0, byPlayer);
             (byPlayer as IClientPlayer)?.TriggerFpAnimation(EnumHandInteract.HeldItemInteract);
 
             if (!Lit)
