@@ -9,6 +9,6 @@
     "version": "1.0.0",
     "dependencies": {
         "attributerenderinglibrary": "2.3.0",
-        "game": "1.21.4"
+        "game": "1.21.5"
     }
 }
