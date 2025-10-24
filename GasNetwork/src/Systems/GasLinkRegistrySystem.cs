@@ -5,7 +5,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 
-namespace GasNetwork.src.System
+namespace GasNetwork.src.Systems
 {
     public class GasLinkRegistrySystem : ModSystem
     {
@@ -46,18 +46,16 @@ namespace GasNetwork.src.System
             return true;
         }
 
-        public void RefreshNeighborPipes(IWorldAccessor world, BlockPos pos)
+        public static void RefreshNeighborPipes(IWorldAccessor world, BlockPos pos)
         {
             foreach (BlockFacing face in BlockFacing.ALLFACES)
             {
                 BlockPos beighbourPos = pos.AddCopy(face);
                 if (world.BlockAccessor.GetBlockEntity(beighbourPos) is BlockEntityPipe bePipe)
                 {
-                    bePipe.RecalculateConnections(true);
-                    world.BlockAccessor.MarkBlockDirty(beighbourPos);
+                    bePipe.RecalculateConnections(false);
                 }
             }
-            world.BlockAccessor.MarkBlockDirty(pos);
         }
 
         private void Load()

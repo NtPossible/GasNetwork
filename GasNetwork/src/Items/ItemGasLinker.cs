@@ -1,4 +1,4 @@
-﻿using GasNetwork.src.System;
+﻿using GasNetwork.src.Systems;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
@@ -26,9 +26,9 @@ namespace GasNetwork.src.Items
 
             (player as IServerPlayer)?.SendMessage(GlobalConstants.GeneralChatGroup, nowLinked ? "Linked to gas network." : "Unlinked from gas network.", EnumChatType.Notification);
 
-            api.World.PlaySoundAt(new AssetLocation(nowLinked ? "game:sounds/block/ingot" : "game:sounds/block/heavymetal-hit"), pos.X, pos.Y, pos.Z, player, true, 16);
+            api.World.PlaySoundAt(new AssetLocation("game:sounds/block/ingot"), pos.X, pos.Y, pos.Z, player, true, 16);
 
-            registry.RefreshNeighborPipes(world, pos);
+            GasLinkRegistrySystem.RefreshNeighborPipes(world, pos);
             handling = EnumHandHandling.PreventDefaultAction;
         }
     }

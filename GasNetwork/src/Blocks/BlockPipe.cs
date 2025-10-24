@@ -1,6 +1,7 @@
 ﻿using GasNetwork.src.BE;
 using GasNetwork.src.Interfaces;
 using GasNetwork.src.Utils;
+using System;
 using System.Collections.Generic;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
@@ -11,11 +12,7 @@ namespace GasNetwork.src.Blocks
     public class BlockPipe : BlockGeneric, IPipeConnectable
     {
         private PipeChannel configuredChannels = PipeChannel.Regular;
-
-        public PipeChannel Channels
-        {
-            get { return configuredChannels; }
-        }
+        public PipeChannel Channels => configuredChannels;
 
         public override void OnLoaded(ICoreAPI api)
         {
@@ -26,16 +23,10 @@ namespace GasNetwork.src.Blocks
                 configuredChannels = channels == "Thin" ? PipeChannel.Thin : PipeChannel.Regular;
             }
         }
-
+        
         public bool CanAcceptPipeAt(BlockFacing face)
         {
             return true;
-        }
-
-        public override bool DoPlaceBlock(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel, ItemStack byItemStack)
-        {
-            SeedInitialConnectionAttributes(byItemStack, world, blockSel.Position, configuredChannels);
-            return base.DoPlaceBlock(world, byPlayer, blockSel, byItemStack);
         }
 
         public override void OnBlockPlaced(IWorldAccessor world, BlockPos blockPos, ItemStack byItemStack = null)
@@ -45,6 +36,23 @@ namespace GasNetwork.src.Blocks
             if (world.BlockAccessor.GetBlockEntity(blockPos) is BlockEntityPipe bePipe)
             {
                 bePipe.RecalculateConnections(true);
+
+                if (world.Side == EnumAppSide.Client)
+                {
+                    // ready the placed pipe for first frame
+                    InitializeRenderStateFromMask(world, bePipe);
+
+                    // ready the neighbours for first frame also
+                    foreach (BlockFacing face in BlockFacing.ALLFACES)
+                    {
+                        BlockPos neighbourPos = blockPos.AddCopy(face);
+                        if (world.BlockAccessor.GetBlockEntity(neighbourPos) is BlockEntityPipe neighbourBe)
+                        {
+                            neighbourBe.RecalculateConnections(false);
+                            InitializeRenderStateFromMask(world, neighbourBe);
+                        }
+                    }
+                }
             }
         }
 
@@ -62,111 +70,162 @@ namespace GasNetwork.src.Blocks
 
             foreach (BlockFacing face in BlockFacing.ALLFACES)
             {
-                if (world.BlockAccessor.GetBlockEntity(pos.AddCopy(face)) is BlockEntityPipe neighborBe)
+                BlockPos neighbourPos = pos.AddCopy(face);
+                if (world.BlockAccessor.GetBlockEntity(neighbourPos) is BlockEntityPipe neighbourBe)
                 {
-                    neighborBe.RecalculateConnections(true);
+                    neighbourBe.RecalculateConnections(true);
+
+                    if (world.Side == EnumAppSide.Client)
+                    {
+                        // Also ready neighbours after a removal so they don’t flash the old model
+                        InitializeRenderStateFromMask(world, neighbourBe);
+                    }
                 }
             }
         }
 
-        // Used to prevent 6 stack from appearing when first placing a pipe
-        private static void SeedInitialConnectionAttributes(ItemStack stack, IWorldAccessor world, BlockPos pos, PipeChannel channel)
+        private static void InitializeRenderStateFromMask(IWorldAccessor world, BlockEntityPipe bePipe)
         {
-            if (stack == null)
+            TreeAttribute tree = new();
+            PipeUtils.PipeSides.WriteTypesTreeFromMask(tree, bePipe.ConnectedMask);
+            bePipe.FromTreeAttributes(tree, world);
+        }
+
+        public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
+        {
+            if (world == null || byPlayer == null || blockSel == null)
             {
-                return;
+                return false;
+            }
+            Item activeItem = byPlayer.InventoryManager?.ActiveHotbarSlot?.Itemstack?.Item;
+            string itemPath = activeItem?.Code?.Path ?? string.Empty;
+
+            if (!itemPath.Contains("wrench"))
+            {
+                return base.OnBlockInteractStart(world, byPlayer, blockSel);
             }
 
-            string north = PipeUtils.IsConnectableAt(world, pos.NorthCopy(), BlockFacing.SOUTH, channel) ? "1" : "0";
-            string east = PipeUtils.IsConnectableAt(world, pos.EastCopy(), BlockFacing.WEST, channel) ? "1" : "0";
-            string south = PipeUtils.IsConnectableAt(world, pos.SouthCopy(), BlockFacing.NORTH, channel) ? "1" : "0";
-            string west = PipeUtils.IsConnectableAt(world, pos.WestCopy(), BlockFacing.EAST, channel) ? "1" : "0";
-            string up = PipeUtils.IsConnectableAt(world, pos.UpCopy(), BlockFacing.DOWN, channel) ? "1" : "0";
-            string down = PipeUtils.IsConnectableAt(world, pos.DownCopy(), BlockFacing.UP, channel) ? "1" : "0";
+            if (world.Side == EnumAppSide.Client)
+            {
+                return true;
+            }
 
-            string connectionMask = north + east + south + west + up + down;
+            if (world.BlockAccessor.GetBlockEntity(blockSel.Position) is not BlockEntityPipe bePipe)
+            {
+                return false;
+            }
 
-            ITreeAttribute connectionTypes = stack.Attributes.GetOrAddTreeAttribute("types");
-            connectionTypes.SetString("north", north);
-            connectionTypes.SetString("east", east);
-            connectionTypes.SetString("south", south);
-            connectionTypes.SetString("west", west);
-            connectionTypes.SetString("up", up);
-            connectionTypes.SetString("down", down);
-            connectionTypes.SetString("mask", connectionMask);
+            BlockFacing targetFacing = FacingFromHit(blockSel);
+
+            bool wasBlocked = bePipe.IsBlocked(targetFacing);
+            bool newBlocked = !wasBlocked;
+
+            bePipe.SetBlocked(targetFacing, newBlocked);
+
+            BlockPos neighbourPos = PipeUtils.PipeSides.Offset(blockSel.Position, targetFacing);
+            if (world.BlockAccessor.GetBlockEntity(neighbourPos) is BlockEntityPipe neighbourBe)
+            {
+                neighbourBe.SetBlocked(targetFacing.Opposite, newBlocked);
+            }
+
+            foreach (BlockFacing face in BlockFacing.ALLFACES)
+            {
+                BlockPos targetPos = blockSel.Position.AddCopy(face);
+                BlockEntity targetEntity = world.BlockAccessor.GetBlockEntity(targetPos);
+                if (targetEntity is BlockEntityPipe targetPipe)
+                {
+                    targetPipe.RecalculateConnections(true);
+                }
+
+                BlockPos neighbourTargetPos = neighbourPos.AddCopy(face);
+                BlockEntity neighbourTargetEntity = world.BlockAccessor.GetBlockEntity(neighbourTargetPos);
+                if (neighbourTargetEntity is BlockEntityPipe neighbourTargetPipe)
+                {
+                    neighbourTargetPipe.RecalculateConnections(true);
+                }
+            }
+
+            return true;
+        }
+
+        private static BlockFacing FacingFromHit(BlockSelection sel)
+        {
+            float dx = (float)(sel.HitPosition.X - 0.5);
+            float dy = (float)(sel.HitPosition.Y - 0.5);
+            float dz = (float)(sel.HitPosition.Z - 0.5);
+
+            float ax = Math.Abs(dx), ay = Math.Abs(dy), az = Math.Abs(dz);
+
+            if (ax >= ay && ax >= az)
+            {
+                return dx >= 0 ? BlockFacing.EAST : BlockFacing.WEST;
+            }
+            if (az >= ax && az >= ay)
+            {
+                return dz >= 0 ? BlockFacing.SOUTH : BlockFacing.NORTH;
+            }
+            return dy >= 0 ? BlockFacing.UP : BlockFacing.DOWN;
+        }
+
+        private float GetPipeThickness()
+        {
+            return Attributes?["pipe"]?["thickness"].AsFloat(0.3125f) ?? 0.3125f;
         }
 
         public override Cuboidf[] GetCollisionBoxes(IBlockAccessor blockAccessor, BlockPos pos)
         {
-            GetConnectionsForBoxes(blockAccessor, pos, out bool north, out bool east, out bool south, out bool west, out bool up, out bool down);
+            byte mask = 0;
 
-            float thickness = (configuredChannels == PipeChannel.Thin) ? 0.13f : 0.315f;
-            List<Cuboidf> boxes = GeneratePipeBoxes(north, east, south, west, up, down, thickness);
-            return boxes.ToArray();
+            if (blockAccessor.GetBlockEntity(pos) is BlockEntityPipe bePipe)
+            {
+                mask = bePipe.ConnectedMask;
+            }
+
+            List<Cuboidf> list = GeneratePipeBoxes(mask, GetPipeThickness());
+            return list.ToArray();
         }
 
         public override Cuboidf[] GetSelectionBoxes(IBlockAccessor blockAccessor, BlockPos pos)
         {
-            GetConnectionsForBoxes(blockAccessor, pos, out bool north, out bool east, out bool south, out bool west, out bool up, out bool down);
-
-            float thickness = (configuredChannels == PipeChannel.Thin) ? 0.13f : 0.315f;
-            List<Cuboidf> boxes = GeneratePipeBoxes(north, east, south, west, up, down, thickness);
-            return boxes.ToArray();
+            return GetCollisionBoxes(blockAccessor, pos);
         }
-
-        private void GetConnectionsForBoxes(IBlockAccessor blockAccessor, BlockPos pos, out bool north, out bool east, out bool south, out bool west, out bool up, out bool down)
-        {
-            if (blockAccessor.GetBlockEntity(pos) is BlockEntityPipe bePipe)
-            {
-                bePipe.GetStoredConnections(out north, out east, out south, out west, out up, out down);
-                return;
-            }
-
-            // fallback
-            north = PipeUtils.IsConnectableAt(api.World, pos.NorthCopy(), BlockFacing.SOUTH, configuredChannels);
-            east = PipeUtils.IsConnectableAt(api.World, pos.EastCopy(), BlockFacing.WEST, configuredChannels);
-            south = PipeUtils.IsConnectableAt(api.World, pos.SouthCopy(), BlockFacing.NORTH, configuredChannels);
-            west = PipeUtils.IsConnectableAt(api.World, pos.WestCopy(), BlockFacing.EAST, configuredChannels);
-            up = PipeUtils.IsConnectableAt(api.World, pos.UpCopy(), BlockFacing.DOWN, configuredChannels);
-            down = PipeUtils.IsConnectableAt(api.World, pos.DownCopy(), BlockFacing.UP, configuredChannels);
-        }
-
         // Builds a core box plus arm boxes in each connected direction.
-        private static List<Cuboidf> GeneratePipeBoxes(bool north, bool east, bool south, bool west, bool up, bool down, float thickness)
+
+        private static List<Cuboidf> GeneratePipeBoxes(byte mask, float thickness)
         {
             // Half the total pipe thickness for symmetrical placement
             float halfThickness = thickness * 0.5f;
-
             // Core bounds are centered around the middle of the block
             float minBound = 0.5f - halfThickness;
             float maxBound = 0.5f + halfThickness;
 
-            List<Cuboidf> boxes = new();
+            List<Cuboidf> boxes = new(7)
+            {
+                // Central segment of the pipe
+                new Cuboidf(minBound, minBound, minBound, maxBound, maxBound, maxBound)
+            };
 
-            // Central segment of the pipe
-            boxes.Add(new Cuboidf(minBound, minBound, minBound, maxBound, maxBound, maxBound));
-
-            // Arms extending toward connected directions
-            if (east)
+            if (PipeUtils.PipeSides.Has(mask, BlockFacing.EAST))
             {
                 boxes.Add(new Cuboidf(maxBound, minBound, minBound, 1f, maxBound, maxBound));
             }
-            if (west)
+            if (PipeUtils.PipeSides.Has(mask, BlockFacing.WEST))
             {
                 boxes.Add(new Cuboidf(0f, minBound, minBound, minBound, maxBound, maxBound));
             }
-            if (north) { 
+            if (PipeUtils.PipeSides.Has(mask, BlockFacing.NORTH))
+            {
                 boxes.Add(new Cuboidf(minBound, minBound, 0f, maxBound, maxBound, minBound));
             }
-            if (south)
+            if (PipeUtils.PipeSides.Has(mask, BlockFacing.SOUTH))
             {
                 boxes.Add(new Cuboidf(minBound, minBound, maxBound, maxBound, maxBound, 1f));
             }
-            if (up)
+            if (PipeUtils.PipeSides.Has(mask, BlockFacing.UP))
             {
                 boxes.Add(new Cuboidf(minBound, maxBound, minBound, maxBound, 1f, maxBound));
             }
-            if (down)
+            if (PipeUtils.PipeSides.Has(mask, BlockFacing.DOWN))
             {
                 boxes.Add(new Cuboidf(minBound, 0f, minBound, maxBound, minBound, maxBound));
             }

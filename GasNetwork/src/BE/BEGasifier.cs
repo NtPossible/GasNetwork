@@ -155,13 +155,6 @@ namespace GasNetwork.src.BE
             }
             TreeAttribute treeAttr = tree.GetTreeAttribute("types") as TreeAttribute;
             types = treeAttr ?? new TreeAttribute();
-
-            if (Api != null && Api.Side == EnumAppSide.Client)
-            {
-                BlockEntityBehaviorShapeTexturesFromAttributes renderer = GetBehavior<BlockEntityBehaviorShapeTexturesFromAttributes>();
-                renderer?.OnBlockPlaced(null);
-                Api.World.BlockAccessor.MarkBlockDirty(Pos);
-            }
         }
 
         public override void ToTreeAttributes(ITreeAttribute tree)

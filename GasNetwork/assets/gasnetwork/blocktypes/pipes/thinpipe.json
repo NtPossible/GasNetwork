@@ -3,7 +3,7 @@
   "class": "gasnetwork:BlockPipe",
   "entityClass": "gasnetwork:BEPipe",
   "shape": { "base": "gasnetwork:block/pipe/thinpipe" },
-  "attributes": { "pipe": { "channels": "Thin" } },
+  "attributes": { "pipe": { "channels": "Thin", "thickness": 0.13 } },
   "entityBehaviors": [
     { "name": "AttributeRenderingLibrary.ShapeTexturesFromAttributes" }
   ],
