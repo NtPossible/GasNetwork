@@ -3,6 +3,7 @@
   "class": "gasnetwork:BlockPipe",
   "entityClass": "gasnetwork:BEPipe",
   "shape": { "base": "gasnetwork:block/pipe/thinpipe" },
+  "shapeInventory": { "base": "gasnetwork:block/pipe/thinpipe", "selectiveElements": ["Core","E/*","W/*"] } ,
   "attributes": { "pipe": { "channels": "Thin", "thickness": 0.13 } },
   "entityBehaviors": [
     { "name": "AttributeRenderingLibrary.ShapeTexturesFromAttributes" }
@@ -116,5 +117,8 @@
     "place": "game:block/heavymetal-hit",
     "break": "game:block/heavymetal-hit",
     "hit": "game:block/heavymetal-hit"
-  }
+  },
+  "guiTransform": {
+		"scale": 1.8
+	}
 }

@@ -3,6 +3,7 @@
   "class": "gasnetwork:BlockPipe",
   "entityClass": "gasnetwork:BEPipe",
   "shape": { "base": "gasnetwork:block/pipe/pipe" },
+  "shapeInventory": { "base": "gasnetwork:block/pipe/pipe", "selectiveElements": ["Core","E/*","W/*"] } ,
   "attributes": { "pipe": { "channels": "Regular", "thickness": 0.3125 } },
   "entityBehaviors": [
     { "name": "AttributeRenderingLibrary.ShapeTexturesFromAttributes" }
@@ -111,9 +112,12 @@
   "lightAbsorption": 1,
   "creativeinventory": { "general": ["*"] },
   "replaceable": 90,
-   "sounds": {
+  "sounds": {
     "place": "game:block/heavymetal-hit",
     "break": "game:block/heavymetal-hit",
     "hit": "game:block/heavymetal-hit"
-  }
+  },
+  "guiTransform": {
+    "scale": 1.6
+	}
 }
