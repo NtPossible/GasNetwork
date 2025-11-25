@@ -23,6 +23,8 @@ namespace GasNetwork.src.BE
 
         double burnStartTotalHours;
 
+        private const string StateKey = "state";
+
         TreeAttribute types = new();
 
         public override void Initialize(ICoreAPI api)
@@ -42,14 +44,14 @@ namespace GasNetwork.src.BE
 
             // Copy state from the itemstack
             ITreeAttribute itemTypes = byItemStack?.Attributes?.GetTreeAttribute("types");
-            if (itemTypes != null && itemTypes.HasAttribute("state"))
+            if (itemTypes != null && itemTypes.HasAttribute(StateKey))
             {
-                types.SetString("state", itemTypes.GetString("state"));
+                types.SetString(StateKey, itemTypes.GetString(StateKey));
             }
 
             MarkDirty(true);
         }
-
+        
         public void ToggleDoor(IPlayer byPlayer)
         {
             SetState(door: IsDoorOpen ? "closed" : "open");
@@ -122,10 +124,10 @@ namespace GasNetwork.src.BE
 
         string State
         {
-            get => types.GetString("state", "closed-none");
+            get => types.GetString(StateKey, "closed-none");
             set
             {
-                types.SetString("state", value);
+                types.SetString(StateKey, value);
                 MarkDirty(true);
             }
         }

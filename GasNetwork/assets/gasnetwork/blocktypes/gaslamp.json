@@ -1,0 +1,39 @@
+{
+  "code": "gaslamp",
+  "class": "gasnetwork:BlockGasLamp",
+  "behaviors": [ { "name": "HorizontalOrientable" } ],
+  "creativeinventory": {
+    "general": [
+      "gaslamp-floor-off-north",
+      "gaslamp-wall-off-north",
+      "gaslamp-ceiling-off-north"
+    ]
+  },
+  "attributes": {
+    "pipe": { "channels": "Thin" }
+  },
+  "variantgroups": [
+    { "code": "mount", "states": [ "floor", "wall", "ceiling" ] },
+    { "code": "state", "states": [ "off", "on" ] },
+    { "code": "side",  "loadFromProperties": "abstract/horizontalorientation" }
+  ],
+  "shapebytype": {
+    "*-north": { "base": "gasnetwork:block/lamp/{state}/gas-{mount}", "rotateY": 0   },
+    "*-east":  { "base": "gasnetwork:block/lamp/{state}/gas-{mount}", "rotateY": 270 },
+    "*-south": { "base": "gasnetwork:block/lamp/{state}/gas-{mount}", "rotateY": 180 },
+    "*-west":  { "base": "gasnetwork:block/lamp/{state}/gas-{mount}", "rotateY": 90  }
+  },
+  "lightHsvbyType": {
+    "*-on-*": [ 7, 3, 22 ]
+  },
+  "faceCullMode": "NeverCull",
+  "replaceable": 90,
+  "sidesolid": { "all": false },
+  "sideopaque": { "all": false },
+  "sideao": { "all": false },
+  "emitsideao": { "all": false },
+  "lightAbsorption": 1,
+  "collisionSelectionBoxes": [
+    { "x1": 0.25, "y1": 0, "z1": 0.25, "x2": 0.75, "y2": 1, "z2": 0.75 }
+  ]
+}

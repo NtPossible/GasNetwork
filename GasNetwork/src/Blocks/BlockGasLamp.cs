@@ -1,5 +1,4 @@
-﻿using AttributeRenderingLibrary;
-using GasNetwork.src.Interfaces;
+﻿using GasNetwork.src.Interfaces;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 
@@ -11,6 +10,46 @@ namespace GasNetwork.src.Blocks
 
         public bool CanAcceptPipeAt(BlockFacing face)
         {
+            string mount = Variant?["mount"] ?? "floor";
+
+            return mount switch
+            {
+                "ceiling" => face == BlockFacing.UP,
+                "floor" => face == BlockFacing.DOWN,
+                "wall" => face.IsHorizontal,
+                _ => face.IsHorizontal
+            };
+        }
+
+        public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
+        {
+            if (blockSel == null || byPlayer == null)
+            {
+                return false;
+            }
+            if (!world.Claims.TryAccess(byPlayer, blockSel.Position, EnumBlockAccessFlags.Use))
+            {
+                return false;
+            }
+
+            if (world.Side == EnumAppSide.Client)
+            {
+                return true;
+            }
+
+            BlockPos pos = blockSel.Position;
+            Block curBlock = world.BlockAccessor.GetBlock(pos);
+
+            string curState = curBlock.Variant.TryGetValue("state", out string state) ? state : "off";
+            string newState = curState == "on" ? "off" : "on";
+
+            AssetLocation newCode = curBlock.CodeWithVariant("state", newState);
+            Block newBlock = world.GetBlock(newCode);
+            if (newBlock == null || newBlock.BlockId == 0)
+            {
+                return false;
+            }
+            world.BlockAccessor.SetBlock(newBlock.BlockId, pos);
             return true;
         }
     }

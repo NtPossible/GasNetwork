@@ -4,9 +4,7 @@
   "block-pipe": "Pipe",
   "block-pipelamp": "Pipe Lamp",
   "block-thinpipe": "Thin Pipe",
-  "block-gaslampceiling-*": "Gas Lamp",
-  "block-gaslampfloor-*": "Gas Lamp",
-  "block-gaslampwall-*": "Gas Lamp",
+  "block-gaslamp-*": "Gas Lamp",
 
   "item-gaslinker": "Gas Linker",
   "itemdesc-gaslinker": "Links existing blocks into the gas pipe network.\nShift + Right-click to unlink.",
