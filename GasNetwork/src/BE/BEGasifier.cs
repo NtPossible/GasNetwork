@@ -1,5 +1,4 @@
-﻿using AttributeRenderingLibrary;
-using GasNetwork.src.Interfaces;
+﻿using GasNetwork.src.Interfaces;
 using System;
 using System.Text;
 using Vintagestory.API.Client;
@@ -14,8 +13,11 @@ namespace GasNetwork.src.BE
         public PipeChannel Channels => PipeChannel.Regular;
         public bool CanAcceptPipeAt(BlockFacing face)
         {
-            return face != BlockFacing.EAST;
+            string sideCode = Block?.Variant?["side"] ?? "north";
+            BlockFacing facing = BlockFacing.FromCode(sideCode);
+            return face != facing.Opposite;
         }
+
         readonly InventoryGeneric inventory = new(1, null, null);
         public bool HasFuel => !inventory[0].Empty;
         public bool IsDoorOpen => State.StartsWith("open");

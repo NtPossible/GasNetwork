@@ -11,13 +11,15 @@ namespace GasNetwork.src.Blocks
         public bool CanAcceptPipeAt(BlockFacing face)
         {
             string mount = Variant?["mount"] ?? "floor";
+            string sideCode = Variant?["side"] ?? "north";
+            BlockFacing facing = BlockFacing.FromCode(sideCode);
 
             return mount switch
             {
                 "ceiling" => face == BlockFacing.UP,
                 "floor" => face == BlockFacing.DOWN,
-                "wall" => face.IsHorizontal,
-                _ => face.IsHorizontal
+                "wall" => face == facing,
+                _ => true
             };
         }
 
