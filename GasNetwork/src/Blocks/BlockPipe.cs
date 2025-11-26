@@ -87,6 +87,7 @@ namespace GasNetwork.src.Blocks
         private static void InitializeRenderStateFromMask(IWorldAccessor world, BlockEntityPipe bePipe)
         {
             TreeAttribute tree = new();
+            bePipe.ToTreeAttributes(tree);
             PipeUtils.PipeSides.WriteTypesTreeFromMask(tree, bePipe.ConnectedMask);
             bePipe.FromTreeAttributes(tree, world);
         }
