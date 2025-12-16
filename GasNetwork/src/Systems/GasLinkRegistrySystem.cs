@@ -19,6 +19,49 @@ namespace GasNetwork.src.Systems
             sapi = api;
             sapi.Event.SaveGameLoaded += Load;
             sapi.Event.GameWorldSave += Save;
+
+            sapi.Event.ChunkColumnLoaded += OnChunkColumnLoaded;
+        }
+
+        private void OnChunkColumnLoaded(Vec2i chunkCoord, IWorldChunk[] chunks)
+        {
+            sapi!.Event.EnqueueMainThreadTask(() =>
+            {
+                HashSet<BlockPos> toRecalc = [];
+
+                foreach (IWorldChunk chunk in chunks)
+                {
+                    if (chunk?.BlockEntities == null)
+                    {
+                        continue;
+                    }
+                    foreach (BlockEntity? blockEntity in chunk.BlockEntities.Values)
+                    {
+                        if (blockEntity is not BlockEntityPipe pipe)
+                        {
+                            continue;
+                        }
+                        // this pipe
+                        toRecalc.Add(pipe.Pos);
+
+                        // + neighbors so border connections fix themselves when the other chunk appears
+                        foreach (BlockFacing? face in BlockFacing.ALLFACES)
+                        {
+                            BlockPos? neighbourPos = pipe.Pos.AddCopy(face);
+                            toRecalc.Add(neighbourPos);
+                        }
+                    }
+                }
+
+                IBlockAccessor blockAccessor = sapi!.World.BlockAccessor;
+                foreach (BlockPos? pos in toRecalc)
+                {
+                    if (blockAccessor.GetBlockEntity(pos) is BlockEntityPipe pipe)
+                    {
+                        pipe.RecalculateConnections(true);
+                    }
+                }
+            }, "gasnetwork:recalc-pipes-on-chunkload");
         }
 
         public bool IsLinked(IWorldAccessor world, BlockPos pos)
@@ -26,6 +69,11 @@ namespace GasNetwork.src.Systems
             if (!linked.Contains(pos))
             {
                 return false;
+            }
+            IWorldChunk chunk = world.BlockAccessor.GetChunkAtBlockPos(pos);
+            if (chunk == null)
+            {
+                return true;
             }
             Block block = world.BlockAccessor.GetBlock(pos);
             if (block == null || block.BlockId == 0)

@@ -1,5 +1,6 @@
 ﻿using GasNetwork.src.Interfaces;
 using GasNetwork.src.Systems;
+using System;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
@@ -26,6 +27,17 @@ namespace GasNetwork.src.Utils
             return registry?.IsLinked(world, neighbourPos) == true;
         }
 
+        public static PipeChannel ParseChannels(string? raw, PipeChannel fallback = PipeChannel.Regular)
+        {
+            if (string.IsNullOrWhiteSpace(raw))
+            {
+                return fallback;
+            }
+
+            raw = raw.Replace(" ", "");
+
+            return Enum.TryParse<PipeChannel>(raw, ignoreCase: true, out var parsed) ? parsed : fallback;
+        }
 
         public static class PipeSides
         {
@@ -62,8 +74,8 @@ namespace GasNetwork.src.Utils
 
             public static void WriteTypesTreeFromMask(ITreeAttribute tree, byte mask)
             {
-                ITreeAttribute t = tree.GetOrAddTreeAttribute("types");
-                t.SetString("mask", ToMaskString(mask));
+                ITreeAttribute attributes = tree.GetOrAddTreeAttribute("types");
+                attributes.SetString("mask", ToMaskString(mask));
             }
         }
     }

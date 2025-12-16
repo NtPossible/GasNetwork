@@ -20,7 +20,7 @@ namespace GasNetwork.src.Blocks
             if (Attributes != null)
             {
                 string? channels = Attributes["pipe"]?["channels"].AsString("Regular");
-                configuredChannels = channels == "Thin" ? PipeChannel.Thin : PipeChannel.Regular;
+                configuredChannels = PipeUtils.ParseChannels(channels, PipeChannel.Regular);
             }
         }
         

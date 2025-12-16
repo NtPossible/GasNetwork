@@ -1,6 +1,7 @@
 ﻿using AttributeRenderingLibrary;
 using GasNetwork.src.Interfaces;
 using GasNetwork.src.Utils;
+using Newtonsoft.Json.Linq;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
@@ -25,7 +26,7 @@ namespace GasNetwork.src.BE
             if (Block?.Attributes != null)
             {
                 string? channels = Block.Attributes["pipe"]?["channels"].AsString("Regular");
-                configuredChannels = channels == "Thin" ? PipeChannel.Thin : PipeChannel.Regular;
+                configuredChannels = PipeUtils.ParseChannels(channels, PipeChannel.Regular);
             }
 
             if (Api.Side == EnumAppSide.Server)
