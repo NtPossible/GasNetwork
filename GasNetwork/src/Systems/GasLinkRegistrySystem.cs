@@ -10,7 +10,7 @@ namespace GasNetwork.src.Systems
     public class GasLinkRegistrySystem : ModSystem
     {
         private readonly HashSet<BlockPos> linked = [];
-        private ICoreServerAPI sapi;
+        private ICoreServerAPI? sapi;
 
         const string StoreKey = "gasnetwork.linkedpositions.bin";
 
@@ -60,7 +60,7 @@ namespace GasNetwork.src.Systems
 
         private void Load()
         {
-            byte[] data = sapi.WorldManager.SaveGame.GetData(StoreKey);
+            byte[]? data = sapi?.WorldManager.SaveGame.GetData(StoreKey);
             if (data == null || data.Length == 0)
             {
                 return;
@@ -91,7 +91,7 @@ namespace GasNetwork.src.Systems
                 binaryWriter.Write(pos.Z);
             }
             binaryWriter.Flush();
-            sapi.WorldManager.SaveGame.StoreData(StoreKey, memoryStream.ToArray());
+            sapi?.WorldManager.SaveGame.StoreData(StoreKey, memoryStream.ToArray());
         }
     }
 }

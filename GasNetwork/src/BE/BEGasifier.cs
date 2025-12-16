@@ -40,12 +40,12 @@ namespace GasNetwork.src.BE
             RegisterGameTickListener(OnTick, 2000, 12);
         }
 
-        public override void OnBlockPlaced(ItemStack byItemStack = null)
+        public override void OnBlockPlaced(ItemStack? byItemStack = null)
         {
             base.OnBlockPlaced(byItemStack);
 
             // Copy state from the itemstack
-            ITreeAttribute itemTypes = byItemStack?.Attributes?.GetTreeAttribute("types");
+            ITreeAttribute? itemTypes = byItemStack?.Attributes?.GetTreeAttribute("types");
             if (itemTypes != null && itemTypes.HasAttribute(StateKey))
             {
                 types.SetString(StateKey, itemTypes.GetString(StateKey));
@@ -134,7 +134,7 @@ namespace GasNetwork.src.BE
             }
         }
 
-        void SetState(string door = null, string fuel = null)
+        void SetState(string? door = null, string? fuel = null)
         {
             string[] parts = State.Split('-');
             string curDoor = (parts.Length > 0 && parts[0].Length > 0) ? parts[0] : "closed";
@@ -157,7 +157,7 @@ namespace GasNetwork.src.BE
             {
                 inventory.FromTreeAttributes(invTree);
             }
-            TreeAttribute treeAttr = tree.GetTreeAttribute("types") as TreeAttribute;
+            TreeAttribute? treeAttr = tree.GetTreeAttribute("types") as TreeAttribute;
             types = treeAttr ?? new TreeAttribute();
         }
 
@@ -174,7 +174,7 @@ namespace GasNetwork.src.BE
             tree["types"] = types;
         }
 
-        public override void OnBlockBroken(IPlayer byPlayer = null)
+        public override void OnBlockBroken(IPlayer? byPlayer = null)
         {
             if (Api.World.Side == EnumAppSide.Server)
             {

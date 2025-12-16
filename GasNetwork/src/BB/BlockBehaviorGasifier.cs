@@ -12,7 +12,7 @@ namespace GasNetwork.src.BB
     {
         public BlockBehaviorGasifier(Block block) : base(block) { }
 
-        WorldInteraction[] interactions;
+        WorldInteraction[]? interactions;
 
         public override void OnLoaded(ICoreAPI api)
         {
@@ -21,9 +21,9 @@ namespace GasNetwork.src.BB
             {
                 return;
             }
-            ICoreClientAPI capi = api as ICoreClientAPI;
+            ICoreClientAPI? capi = api as ICoreClientAPI;
 
-            BlockForge forgeBlock = api.World.GetBlock(new AssetLocation("forge")) as BlockForge;
+            BlockForge? forgeBlock = api.World.GetBlock(new AssetLocation("forge")) as BlockForge;
 
             interactions = ObjectCacheUtil.GetOrCreate(api, "gasnetwork:gasifierBlockInteractions", () =>
             {
@@ -40,7 +40,7 @@ namespace GasNetwork.src.BB
                         ActionLangCode = "blockhelp-coalpile-addcoal",
                         MouseButton = EnumMouseButton.Right,
                         HotKeyCode = "shift",
-                        Itemstacks = forgeBlock.coalStacklist.ToArray()
+                        Itemstacks = forgeBlock?.coalStacklist.ToArray()
                     },
                     new()
                     {

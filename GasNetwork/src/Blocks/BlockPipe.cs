@@ -19,7 +19,7 @@ namespace GasNetwork.src.Blocks
             base.OnLoaded(api);
             if (Attributes != null)
             {
-                string channels = Attributes["pipe"]?["channels"].AsString("Regular");
+                string? channels = Attributes["pipe"]?["channels"].AsString("Regular");
                 configuredChannels = channels == "Thin" ? PipeChannel.Thin : PipeChannel.Regular;
             }
         }
@@ -29,7 +29,7 @@ namespace GasNetwork.src.Blocks
             return true;
         }
 
-        public override void OnBlockPlaced(IWorldAccessor world, BlockPos blockPos, ItemStack byItemStack = null)
+        public override void OnBlockPlaced(IWorldAccessor world, BlockPos blockPos, ItemStack? byItemStack = null)
         {
             base.OnBlockPlaced(world, blockPos, byItemStack);
 
@@ -60,7 +60,7 @@ namespace GasNetwork.src.Blocks
         {
             base.OnNeighbourBlockChange(world, pos, neibpos);
 
-            BlockEntityPipe bePipe = world.BlockAccessor.GetBlockEntity(pos) as BlockEntityPipe;
+            BlockEntityPipe? bePipe = world.BlockAccessor.GetBlockEntity(pos) as BlockEntityPipe;
             bePipe?.RecalculateConnections(false);
         }
 
@@ -98,7 +98,7 @@ namespace GasNetwork.src.Blocks
             {
                 return false;
             }
-            Item activeItem = byPlayer.InventoryManager?.ActiveHotbarSlot?.Itemstack?.Item;
+            Item? activeItem = byPlayer.InventoryManager?.ActiveHotbarSlot?.Itemstack?.Item;
             string itemPath = activeItem?.Code?.Path ?? string.Empty;
 
             if (!itemPath.Contains("wrench"))

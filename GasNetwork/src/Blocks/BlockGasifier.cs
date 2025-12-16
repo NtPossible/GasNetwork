@@ -56,13 +56,13 @@ namespace GasNetwork.src.Blocks
         public void OnTryIgniteBlockOver(EntityAgent byEntity, BlockPos pos, float secondsIgniting, ref EnumHandling handling)
         {
             handling = EnumHandling.PreventDefault;
-            BlockEntityGasifier beGasifier = api.World.BlockAccessor.GetBlockEntity(pos) as BlockEntityGasifier;
+            BlockEntityGasifier? beGasifier = api.World.BlockAccessor.GetBlockEntity(pos) as BlockEntityGasifier;
             beGasifier?.OnIgnited();
         }
 
         EnumIgniteState IIgnitable.OnTryIgniteStack(EntityAgent byEntity, BlockPos pos, ItemSlot slot, float secondsIgniting)
         {
-            BlockEntityGasifier beGasifier = api.World.BlockAccessor.GetBlockEntity(pos) as BlockEntityGasifier;
+            BlockEntityGasifier? beGasifier = api.World.BlockAccessor.GetBlockEntity(pos) as BlockEntityGasifier;
             if (beGasifier?.Lit == true)
             {
                 return secondsIgniting > 3 ? EnumIgniteState.IgniteNow : EnumIgniteState.Ignitable;

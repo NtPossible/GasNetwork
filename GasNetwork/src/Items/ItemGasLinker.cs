@@ -15,7 +15,7 @@ namespace GasNetwork.src.Items
                 return;
             }
             IWorldAccessor world = api.World;
-            IPlayer player = (byEntity as EntityPlayer)?.Player;
+            IPlayer? player = (byEntity as EntityPlayer)?.Player;
             if (player != null && !world.Claims.TryAccess(player, blockSel.Position, EnumBlockAccessFlags.Use))
             {
                 return;
