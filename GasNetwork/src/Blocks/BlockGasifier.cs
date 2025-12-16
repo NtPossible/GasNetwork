@@ -1,4 +1,5 @@
 ﻿using GasNetwork.src.BE;
+using GasNetwork.src.Systems;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
@@ -13,9 +14,53 @@ namespace GasNetwork.src.Blocks
             if (byItemStack != null)
             {
                 ITreeAttribute types = byItemStack.Attributes.GetOrAddTreeAttribute("types");
-                types.SetString("state", "closed-none");
+                if (!types.HasAttribute("state"))
+                {
+                    types.SetString("state", "closed-none");
+                }
+                else
+                {
+                    types.SetString("state", "closed-none");
+                }
             }
-            return base.DoPlaceBlock(world, byPlayer, blockSel, byItemStack);
+
+            BlockPos topPos = blockSel.Position.UpCopy();
+            Block topExisting = world.BlockAccessor.GetBlock(topPos);
+            if (topExisting != null && topExisting.Replaceable < 6000)
+            {
+                return false;
+            }
+            bool placed = base.DoPlaceBlock(world, byPlayer, blockSel, byItemStack);
+            if (!placed)
+            {
+                return false;
+            }
+            Block topBlock = world.GetBlock(new AssetLocation("gasnetwork:gasifiertop"));
+            if (topBlock == null || topBlock.BlockId == 0)
+            {
+                return false;
+            }
+
+            world.BlockAccessor.SetBlock(topBlock.BlockId, topPos);
+            GasLinkRegistrySystem.RefreshNeighborPipes(world, topPos);
+            GasLinkRegistrySystem.RefreshNeighborPipes(world, blockSel.Position);
+
+            return true;
+        }
+
+
+        public override void OnBlockRemoved(IWorldAccessor world, BlockPos pos)
+        {
+            BlockPos topPos = pos.UpCopy();
+            Block top = world.BlockAccessor.GetBlock(topPos);
+
+            if (top?.Code?.Path?.StartsWith("gasifiertop") == true)
+            {
+                world.BlockAccessor.SetBlock(0, topPos);
+                GasLinkRegistrySystem.RefreshNeighborPipes(world, pos);
+                GasLinkRegistrySystem.RefreshNeighborPipes(world, topPos);
+            }
+            base.OnBlockRemoved(world, pos);
         }
 
         public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)

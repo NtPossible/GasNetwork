@@ -1,5 +1,6 @@
 {
   "block-gasifier-*": "Gasifier",
+  "block-gasifiertop": "Gasifier",
   "block-gasifiertank-*": "Gasifier Tank",
   "block-pipe": "Pipe",
   "block-pipelamp": "Pipe Lamp",

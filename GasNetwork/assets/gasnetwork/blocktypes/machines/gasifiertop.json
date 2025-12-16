@@ -1,0 +1,19 @@
+{
+  "code": "gasifiertop",
+  "class": "gasnetwork:BlockGasifierTop",
+  "attributes": { "pipe": { "channels": "Regular" } },
+  "shape": { "base": "block/machine/empty" },
+  "blockmaterial": "Metal",
+  "drawtype": "json",
+  "faceCullMode": "NeverCull",
+  "replaceable": 160,
+  "resistance": 4,
+  "lightAbsorption": 0,
+  "sidesolid": { "all": false },
+  "sideopaque": { "all": false },
+  "sounds": {
+    "place": "game:block/heavymetal-hit",
+    "break": "game:block/heavymetal-hit",
+    "hit": "game:block/heavymetal-hit"
+  }
+}

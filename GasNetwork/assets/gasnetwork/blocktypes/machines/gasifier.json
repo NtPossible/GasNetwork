@@ -10,7 +10,6 @@
     { "name": "AttributeRenderingLibrary.ShapeTexturesFromAttributes" }
   ],
   "behaviors": [
-    { "name": "Multiblock", "properties": { "sizex": 1, "sizey": 2, "sizez": 1, "cposition": { "x": 0, "y": 0, "z": 0 } } },
     { "name": "gasnetwork:BBGasifier" }, 
     { "name": "AttributeRenderingLibrary.HorizontalOrientable" },
     {
@@ -40,6 +39,7 @@
     "*-south": { "base": "gasnetwork:block/machine/gasifier", "rotateY": 270 },
     "*-west": { "base": "gasnetwork:block/machine/gasifier", "rotateY": 180 }
   },
+  "shapeInventory": { "base": "gasnetwork:block/machine/gasifier", "selectiveElements": ["Mover/*","door-closed/*"] } ,
   "blockmaterial": "Metal",
   "drawtype": "json",
   "faceCullMode": "NeverCull",
