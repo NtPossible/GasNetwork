@@ -46,7 +46,7 @@ namespace GasNetwork.src.Blocks
                 BlockPos bottomPos = pos.DownCopy();
                 Block bottom = world.BlockAccessor.GetBlock(bottomPos);
 
-                if (bottom != null && bottom.BlockId != 0 && bottom.Code?.Path?.StartsWith("gasifier") == true)
+                if (bottom != null && bottom.BlockId != 0 && bottom.Code?.Path?.StartsWith(GasifierKey) == true)
                 {
                     world.BlockAccessor.BreakBlock(bottomPos, byPlayer);
                 }
@@ -60,7 +60,7 @@ namespace GasNetwork.src.Blocks
             BlockPos bottomPos = pos.DownCopy();
             Block bottom = world.BlockAccessor.GetBlock(bottomPos);
 
-            if (bottom?.Code?.Path?.StartsWith("gasifier") == true)
+            if (bottom?.Code?.Path?.StartsWith(GasifierKey) == true)
             {
                 world.BlockAccessor.SetBlock(0, bottomPos);
             }
