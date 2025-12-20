@@ -4,7 +4,7 @@
   "maxstacksize": 1,
   "creativeinventory": { "general": [ "*" ] },
   "attributes": {
-    "usage": "Right-click a block to link it to the gas network. Shift+Right-click to unlink."
+    "usage": "Right-click a block to link or unlink it to the gas network."
   },
   "shape": { "base": "item/gaslinker" },
   "guiTransform": {

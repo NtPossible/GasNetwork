@@ -14,14 +14,7 @@ namespace GasNetwork.src.Blocks
             if (byItemStack != null)
             {
                 ITreeAttribute types = byItemStack.Attributes.GetOrAddTreeAttribute("types");
-                if (!types.HasAttribute("state"))
-                {
-                    types.SetString("state", "closed-none");
-                }
-                else
-                {
-                    types.SetString("state", "closed-none");
-                }
+                types.SetString("state", "closed-none");
             }
 
             BlockPos topPos = blockSel.Position.UpCopy();
@@ -30,11 +23,13 @@ namespace GasNetwork.src.Blocks
             {
                 return false;
             }
+
             bool placed = base.DoPlaceBlock(world, byPlayer, blockSel, byItemStack);
             if (!placed)
             {
                 return false;
             }
+
             Block topBlock = world.GetBlock(new AssetLocation("gasnetwork:gasifiertop"));
             if (topBlock == null || topBlock.BlockId == 0)
             {
@@ -47,7 +42,6 @@ namespace GasNetwork.src.Blocks
 
             return true;
         }
-
 
         public override void OnBlockRemoved(IWorldAccessor world, BlockPos pos)
         {
